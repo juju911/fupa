@@ -92,36 +92,122 @@ export type Database = {
         }
         Relationships: []
       }
-      registrations: {
+      program_capacity: {
         Row: {
           created_at: string
+          id: string
+          occupied_places: number | null
+          program_name: string
+          program_type: string
+          total_places: number
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          occupied_places?: number | null
+          program_name: string
+          program_type: string
+          total_places: number
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          occupied_places?: number | null
+          program_name?: string
+          program_type?: string
+          total_places?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      receipts: {
+        Row: {
+          amount: number
+          created_at: string
+          id: string
+          payment_date: string
+          pdf_data: string | null
+          receipt_number: string
+          registration_id: string
+        }
+        Insert: {
+          amount: number
+          created_at?: string
+          id?: string
+          payment_date?: string
+          pdf_data?: string | null
+          receipt_number: string
+          registration_id: string
+        }
+        Update: {
+          amount?: number
+          created_at?: string
+          id?: string
+          payment_date?: string
+          pdf_data?: string | null
+          receipt_number?: string
+          registration_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "receipts_registration_id_fkey"
+            columns: ["registration_id"]
+            isOneToOne: false
+            referencedRelation: "registrations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      registrations: {
+        Row: {
+          amount: number | null
+          created_at: string
+          documents_verified: boolean | null
           email: string
           eventbrite_response: Json | null
           id: string
           name: string
+          payment_reference: string | null
+          payment_status: string | null
           phone: string
+          program_name: string | null
+          program_type: string | null
           registration_date: string
           status: string | null
           updated_at: string
         }
         Insert: {
+          amount?: number | null
           created_at?: string
+          documents_verified?: boolean | null
           email: string
           eventbrite_response?: Json | null
           id?: string
           name: string
+          payment_reference?: string | null
+          payment_status?: string | null
           phone: string
+          program_name?: string | null
+          program_type?: string | null
           registration_date?: string
           status?: string | null
           updated_at?: string
         }
         Update: {
+          amount?: number | null
           created_at?: string
+          documents_verified?: boolean | null
           email?: string
           eventbrite_response?: Json | null
           id?: string
           name?: string
+          payment_reference?: string | null
+          payment_status?: string | null
           phone?: string
+          program_name?: string | null
+          program_type?: string | null
           registration_date?: string
           status?: string | null
           updated_at?: string
