@@ -15,7 +15,9 @@ import {
   Drama,
   Calculator,
   Briefcase,
-  Star
+  Star,
+  Volume2,
+  Play
 } from 'lucide-react';
 
 const StudentLife = () => {
@@ -113,6 +115,30 @@ const StudentLife = () => {
       photo: null,
       quote: "Les activités culturelles et caritatives de FUPA ont enrichi mon parcours au-delà du cursus académique. Une expérience humaine unique.",
       achievement: "Responsable RSE dans une multinationale"
+    }
+  ];
+
+  const audioTestimonials = [
+    {
+      name: "Koné Bintou",
+      program: "Étudiante FUPA",
+      audioUrl: "https://soundcloud.com/fupa-612180871/kone-bintou?si=68b1a68a9fcb4dcda93704a37005ade5&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing",
+      title: "Mon parcours à FUPA m'a transformée",
+      description: "Découvrez comment FUPA a changé ma vision de l'excellence académique et m'a préparée pour l'avenir."
+    },
+    {
+      name: "Seka Patrice",
+      program: "Étudiant FUPA",
+      audioUrl: "https://soundcloud.com/fupa-612180871/seka-patrice?si=ef281d8f998344e19bd86ce80b46483f&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing",
+      title: "Une formation qui ouvre toutes les portes",
+      description: "Écoutez mon témoignage sur la qualité de l'enseignement et les opportunités offertes par FUPA."
+    },
+    {
+      name: "Parent d'étudiant",
+      program: "Témoignage parental",
+      audioUrl: "https://soundcloud.com/fupa-612180871/m-loup?si=a5738613392347bfb8d70178277afdfa&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing",
+      title: "Le choix parfait pour mon enfant",
+      description: "Un parent partage son expérience et sa satisfaction du choix de FUPA pour l'éducation de son enfant."
     }
   ];
 
@@ -250,7 +276,7 @@ const StudentLife = () => {
             </p>
           </div>
 
-          <div className="grid lg:grid-cols-3 gap-8">
+          <div className="grid lg:grid-cols-3 gap-8 mb-12">
             {testimonials.map((testimonial, index) => (
               <Card key={testimonial.name} className="hover:shadow-elegant transition-all duration-300 hover:-translate-y-2 animate-fade-in" style={{ animationDelay: `${index * 150}ms` }}>
                 <CardContent className="p-6">
@@ -278,6 +304,55 @@ const StudentLife = () => {
                 </CardContent>
               </Card>
             ))}
+          </div>
+
+          {/* Témoignages Audio */}
+          <div className="mt-16">
+            <div className="text-center mb-12">
+              <h3 className="text-2xl md:text-3xl font-heading font-bold text-primary mb-4">
+                Témoignages Audio
+              </h3>
+              <p className="text-lg text-muted-foreground">
+                Écoutez les expériences de nos étudiants et parents
+              </p>
+            </div>
+
+            <div className="grid lg:grid-cols-3 gap-8">
+              {audioTestimonials.map((testimonial, index) => (
+                <Card key={testimonial.name} className="hover:shadow-elegant transition-all duration-300 hover:-translate-y-2 animate-fade-in" style={{ animationDelay: `${index * 150}ms` }}>
+                  <CardContent className="p-6">
+                    <div className="text-center mb-6">
+                      <div className="w-20 h-20 rounded-full bg-gradient-to-br from-primary to-accent mx-auto mb-4 flex items-center justify-center">
+                        <Volume2 className="h-10 w-10 text-white" />
+                      </div>
+                      <h3 className="font-heading font-bold text-primary mb-1">
+                        {testimonial.name}
+                      </h3>
+                      <p className="text-sm text-accent font-semibold mb-2">
+                        {testimonial.program}
+                      </p>
+                    </div>
+                    
+                    <div className="space-y-4">
+                      <div>
+                        <h4 className="font-semibold text-primary mb-2">{testimonial.title}</h4>
+                        <p className="text-sm text-muted-foreground mb-4">
+                          {testimonial.description}
+                        </p>
+                      </div>
+                      
+                      <Button 
+                        className="w-full btn-academic"
+                        onClick={() => window.open(testimonial.audioUrl, '_blank')}
+                      >
+                        <Play className="h-4 w-4 mr-2" />
+                        Écouter le témoignage
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
           </div>
         </div>
       </section>
