@@ -7,15 +7,15 @@ const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const navigation = [
-    { name: 'Accueil', href: '#' },
-    { name: 'À propos', href: '#about' },
-    { name: 'L\'Équipe', href: '#team' },
-    { name: 'Formations', href: '#programs' },
-    { name: 'Vie étudiante', href: '#student-life' },
-    { name: 'Admissions', href: '#admissions' },
+    { name: 'Accueil', href: '/' },
+    { name: 'À propos', href: '/about' },
+    { name: 'L\'Équipe', href: '/team' },
+    { name: 'Formations', href: '/programs' },
+    { name: 'Vie étudiante', href: '/student-life' },
+    { name: 'Admissions', href: '/admissions' },
     { name: 'Actualités', href: '#news' },
-    { name: 'FAQ', href: '#faq' },
-    { name: 'Contact', href: '#contact' },
+    { name: 'FAQ', href: '/faq' },
+    { name: 'Contact', href: '/contact' },
   ];
 
   return (
@@ -29,14 +29,6 @@ const Header = () => {
               alt="FUPA Logo" 
               className="h-16 w-auto hover:scale-110 transition-transform duration-300 animate-float"
             />
-            <div className="hidden md:block">
-              <h1 className="text-xl font-heading font-semibold text-primary">
-                Facultés Universitaires Privées d'Abidjan
-              </h1>
-              <p className="text-sm text-muted-foreground">
-                Excellence • Innovation • Réussite
-              </p>
-            </div>
           </div>
 
           {/* Desktop Navigation */}
