@@ -17,10 +17,14 @@ import {
   Briefcase,
   Star,
   Volume2,
-  Play
+  Play,
+  X,
+  ZoomIn
 } from 'lucide-react';
+import { useState } from 'react';
 
 const StudentLife = () => {
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const clubs = [
     {
       name: "Club de Débat Juridique",
@@ -139,6 +143,29 @@ const StudentLife = () => {
       audioUrl: "https://soundcloud.com/fupa-612180871/m-loup?si=a5738613392347bfb8d70178277afdfa&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing",
       title: "Le choix parfait pour mon enfant",
       description: "Un parent partage son expérience et sa satisfaction du choix de FUPA pour l'éducation de son enfant."
+    }
+  ];
+
+  const galleryImages = [
+    {
+      src: "/lovable-uploads/8288c117-6cf2-4bf1-afb8-db5cb4cb300a.png",
+      title: "Moments de Convivialité",
+      description: "Nos étudiants et le corps enseignant lors d'un événement communautaire, illustrant l'esprit familial de FUPA."
+    },
+    {
+      src: "/lovable-uploads/e9a121c1-7f75-4323-92c0-19982722447e.png",
+      title: "Cérémonie de Graduation",
+      description: "Moment de fierté lors de la remise des diplômes, célébrant le succès de nos diplômés."
+    },
+    {
+      src: "/lovable-uploads/b60eb1f3-54d3-41f1-84f5-eabfaad32784.png",
+      title: "Colloque Académique",
+      description: "Nos étudiants participant activement aux conférences et colloques sur le droit des contrats dans l'espace OHADA."
+    },
+    {
+      src: "/lovable-uploads/88fbef6d-04a7-4510-bc0a-8cdb93566b8e.png",
+      title: "Excellence Académique",
+      description: "Une diplômée fière de son parcours, tenant son certificat de réussite avec distinction."
     }
   ];
 
@@ -356,6 +383,71 @@ const StudentLife = () => {
           </div>
         </div>
       </section>
+
+      {/* Galerie Photos */}
+      <section className="py-16 bg-card">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-heading font-bold text-primary mb-4">
+              Galerie Photos
+            </h2>
+            <p className="text-xl text-muted-foreground">
+              Découvrez la vie étudiante à FUPA en images
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {galleryImages.map((image, index) => (
+              <Card 
+                key={index} 
+                className="group hover:shadow-elegant transition-all duration-300 hover:-translate-y-2 animate-fade-in cursor-pointer" 
+                style={{ animationDelay: `${index * 100}ms` }}
+                onClick={() => setSelectedImage(image.src)}
+              >
+                <CardContent className="p-0">
+                  <div className="relative overflow-hidden rounded-t-lg">
+                    <img 
+                      src={image.src} 
+                      alt={image.title}
+                      className="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-110"
+                    />
+                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-all duration-300 flex items-center justify-center">
+                      <ZoomIn className="h-8 w-8 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    </div>
+                  </div>
+                  <div className="p-4">
+                    <h3 className="font-heading font-bold text-primary mb-2">{image.title}</h3>
+                    <p className="text-sm text-muted-foreground">{image.description}</p>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Modal pour voir l'image en grand */}
+      {selectedImage && (
+        <div 
+          className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4"
+          onClick={() => setSelectedImage(null)}
+        >
+          <div className="relative max-w-4xl max-h-[90vh] w-full h-full flex items-center justify-center">
+            <img 
+              src={selectedImage} 
+              alt="Image en grand format"
+              className="max-w-full max-h-full object-contain rounded-lg"
+              onClick={(e) => e.stopPropagation()}
+            />
+            <button
+              onClick={() => setSelectedImage(null)}
+              className="absolute top-4 right-4 bg-white/20 hover:bg-white/30 rounded-full p-2 transition-colors"
+            >
+              <X className="h-6 w-6 text-white" />
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* Infrastructure */}
       <section className="py-16 bg-card">
