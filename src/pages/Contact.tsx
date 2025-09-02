@@ -1,3 +1,5 @@
+import Header from '@/components/Header';
+import Footer from '@/components/Footer';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -7,7 +9,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { 
   MapPin, 
   Phone, 
-  Mail, 
+  Mail,
   Clock, 
   Send, 
   Facebook, 
@@ -109,6 +111,8 @@ const Contact = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <Header />
+      
       {/* Hero Section */}
       <section className="relative py-20 bg-gradient-academic text-white">
         <div className="absolute inset-0 bg-black/20"></div>
@@ -385,6 +389,8 @@ const Contact = () => {
           </div>
         </div>
       </section>
+
+      <Footer />
     </div>
   );
 };

@@ -13,7 +13,7 @@ const Header = () => {
     { name: 'Formations', href: '/programs' },
     { name: 'Vie étudiante', href: '/student-life' },
     { name: 'Admissions', href: '/admissions' },
-    { name: 'Actualités', href: '#news' },
+    { name: 'Actualités', href: '/news' },
     { name: 'FAQ', href: '/faq' },
     { name: 'Contact', href: '/contact' },
   ];
@@ -27,7 +27,7 @@ const Header = () => {
             <img 
               src={fupaLogo} 
               alt="FUPA Logo" 
-              className="h-16 w-auto hover:scale-110 transition-transform duration-300 animate-float"
+              className="h-16 w-auto hover:scale-110 transition-transform duration-300"
             />
           </div>
 

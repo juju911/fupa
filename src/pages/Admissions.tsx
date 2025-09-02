@@ -1,3 +1,5 @@
+import Header from '@/components/Header';
+import Footer from '@/components/Footer';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -7,7 +9,7 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { 
   FileText, 
-  Calendar, 
+  Calendar,
   Euro, 
   CheckCircle, 
   Clock, 
@@ -116,6 +118,8 @@ const Admissions = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <Header />
+      
       {/* Hero Section */}
       <section className="relative py-20 bg-gradient-academic text-white">
         <div className="absolute inset-0 bg-black/20"></div>
@@ -445,6 +449,8 @@ const Admissions = () => {
           </div>
         </div>
       </section>
+
+      <Footer />
     </div>
   );
 };

@@ -213,13 +213,13 @@ const Footer = () => {
               © 2024 Facultés Universitaires Privées d'Abidjan (FUPA). Tous droits réservés.
             </p>
             <div className="flex space-x-6">
-              <a href="#" className="text-sm text-primary-foreground/80 hover:text-secondary transition-colors">
+              <a href="/privacy-policy" className="text-sm text-primary-foreground/80 hover:text-secondary transition-colors">
                 Politique de confidentialité
               </a>
               <a href="#" className="text-sm text-primary-foreground/80 hover:text-secondary transition-colors">
                 Conditions d'utilisation
               </a>
-              <a href="#" className="text-sm text-primary-foreground/80 hover:text-secondary transition-colors">
+              <a href="/legal-notice" className="text-sm text-primary-foreground/80 hover:text-secondary transition-colors">
                 Mentions légales
               </a>
             </div>

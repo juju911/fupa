@@ -1,3 +1,5 @@
+import Header from '@/components/Header';
+import Footer from '@/components/Footer';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Quote, Mail, Linkedin, Award, BookOpen, Users } from 'lucide-react';
@@ -92,6 +94,8 @@ const Team = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <Header />
+      
       {/* Hero Section */}
       <section className="relative py-20 bg-gradient-academic text-white">
         <div className="absolute inset-0 bg-black/20"></div>
@@ -265,6 +269,8 @@ const Team = () => {
           </div>
         </div>
       </section>
+
+      <Footer />
     </div>
   );
 };

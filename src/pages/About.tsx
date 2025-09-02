@@ -1,3 +1,5 @@
+import Header from '@/components/Header';
+import Footer from '@/components/Footer';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Building, Target, Eye, Heart, Users, Award, Globe } from 'lucide-react';
@@ -37,6 +39,8 @@ const About = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <Header />
+      
       {/* Hero Section */}
       <section className="relative py-20 bg-gradient-academic text-white">
         <div className="absolute inset-0 bg-black/20"></div>
@@ -198,6 +202,8 @@ const About = () => {
           </div>
         </div>
       </section>
+
+      <Footer />
     </div>
   );
 };
