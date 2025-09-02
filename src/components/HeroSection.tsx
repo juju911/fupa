@@ -45,9 +45,9 @@ const HeroSection = () => {
 
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-              <Button size="lg" className="btn-gold text-lg px-8">
+              <Button size="lg" className="btn-gold text-lg px-8" onClick={() => window.location.href = '/registration'}>
                 <Mail className="mr-2 h-5 w-5" />
-                Demander des informations
+                S'inscrire maintenant
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
               <Button size="lg" variant="outline" className="border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary text-lg px-8">
