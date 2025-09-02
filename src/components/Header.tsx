@@ -14,7 +14,7 @@ const Header = () => {
     { name: 'Vie étudiante', href: '#student-life' },
     { name: 'Admissions', href: '#admissions' },
     { name: 'Actualités', href: '#news' },
-    { name: 'Alumni', href: '#alumni' },
+    { name: 'FAQ', href: '#faq' },
     { name: 'Contact', href: '#contact' },
   ];
 
@@ -27,7 +27,7 @@ const Header = () => {
             <img 
               src={fupaLogo} 
               alt="FUPA Logo" 
-              className="h-12 w-auto"
+              className="h-16 w-auto hover:scale-110 transition-transform duration-300 animate-float"
             />
             <div className="hidden md:block">
               <h1 className="text-xl font-heading font-semibold text-primary">
@@ -40,12 +40,13 @@ const Header = () => {
           </div>
 
           {/* Desktop Navigation */}
-          <nav className="hidden lg:flex space-x-1">
-            {navigation.map((item) => (
+            <nav className="hidden lg:flex space-x-1">
+            {navigation.map((item, index) => (
               <a
                 key={item.name}
                 href={item.href}
-                className="px-3 py-2 text-sm font-medium text-foreground hover:text-primary transition-colors duration-200 rounded-md hover:bg-accent"
+                className="px-3 py-2 text-sm font-medium text-foreground hover:text-primary transition-all duration-300 rounded-md hover:bg-accent hover:scale-105 hover:shadow-elegant animate-fade-in"
+                style={{ animationDelay: `${index * 100}ms` }}
               >
                 {item.name}
               </a>
@@ -54,10 +55,7 @@ const Header = () => {
 
           {/* CTA Button */}
           <div className="hidden md:flex items-center space-x-3">
-            <Button variant="outline" size="sm" className="btn-outline-academic">
-              Demander des infos
-            </Button>
-            <Button size="sm" className="btn-academic">
+            <Button size="sm" className="btn-academic animate-pulse hover:animate-none hover:scale-110 transition-all duration-300">
               S'inscrire
             </Button>
           </div>
@@ -75,20 +73,18 @@ const Header = () => {
         {isMenuOpen && (
           <div className="lg:hidden py-4 border-t border-border">
             <nav className="flex flex-col space-y-2">
-              {navigation.map((item) => (
+              {navigation.map((item, index) => (
                 <a
                   key={item.name}
                   href={item.href}
-                  className="px-3 py-2 text-sm font-medium text-foreground hover:text-primary transition-colors duration-200 rounded-md hover:bg-accent"
+                  className="px-3 py-2 text-sm font-medium text-foreground hover:text-primary transition-all duration-300 rounded-md hover:bg-accent hover:scale-105 animate-fade-in"
+                  style={{ animationDelay: `${index * 100}ms` }}
                   onClick={() => setIsMenuOpen(false)}
                 >
                   {item.name}
                 </a>
               ))}
               <div className="flex flex-col space-y-2 pt-4 border-t border-border">
-                <Button variant="outline" size="sm" className="btn-outline-academic">
-                  Demander des infos
-                </Button>
                 <Button size="sm" className="btn-academic">
                   S'inscrire
                 </Button>
