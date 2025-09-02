@@ -13,8 +13,22 @@ import {
   GraduationCap
 } from 'lucide-react';
 import fupaLogo from '@/assets/fupa-logo.png';
+import { useFormSubmission } from '@/hooks/useFormSubmission';
+import { useState, useEffect } from 'react';
 
 const Footer = () => {
+  const { submitNewsletterForm, isLoading } = useFormSubmission();
+  const [email, setEmail] = useState('');
+
+  const handleNewsletterSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email) return;
+    
+    const result = await submitNewsletterForm({ email });
+    if (result.success) {
+      setEmail('');
+    }
+  };
   const quickLinks = [
     { name: 'Admissions', href: '#admissions' },
     { name: 'Formations', href: '#programs' },
@@ -52,16 +66,19 @@ const Footer = () => {
                 Recevez les dernières actualités, événements et opportunités de la FUPA.
               </p>
             </div>
-            <div className="flex flex-col sm:flex-row gap-3">
+            <form onSubmit={handleNewsletterSubmit} className="flex flex-col sm:flex-row gap-3">
               <input
                 type="email"
                 placeholder="Votre adresse email"
                 className="flex-1 px-4 py-3 rounded-lg bg-primary-foreground/10 border border-primary-foreground/20 text-primary-foreground placeholder-primary-foreground/60 focus:outline-none focus:ring-2 focus:ring-secondary"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
               />
-              <Button className="btn-gold px-8">
-                S'abonner
+              <Button type="submit" className="btn-gold px-8" disabled={isLoading}>
+                {isLoading ? 'Inscription...' : 'S\'abonner'}
               </Button>
-            </div>
+            </form>
           </div>
         </div>
       </div>
@@ -176,26 +193,38 @@ const Footer = () => {
               <h5 className="font-medium mb-4">Suivez-nous</h5>
               <div className="flex space-x-3">
                 <a 
-                  href="#" 
+                  href="https://facebook.com/fupaabidjan" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
                   className="bg-primary-foreground/10 p-2 rounded-lg hover:bg-secondary hover:text-secondary-foreground transition-colors duration-200"
+                  aria-label="Facebook FUPA"
                 >
                   <Facebook className="h-5 w-5" />
                 </a>
                 <a 
-                  href="#" 
+                  href="https://twitter.com/Fupa_Abidjan" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
                   className="bg-primary-foreground/10 p-2 rounded-lg hover:bg-secondary hover:text-secondary-foreground transition-colors duration-200"
+                  aria-label="Twitter FUPA"
                 >
                   <Twitter className="h-5 w-5" />
                 </a>
                 <a 
-                  href="#" 
+                  href="https://instagram.com/fupa_abidjan" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
                   className="bg-primary-foreground/10 p-2 rounded-lg hover:bg-secondary hover:text-secondary-foreground transition-colors duration-200"
+                  aria-label="Instagram FUPA"
                 >
                   <Instagram className="h-5 w-5" />
                 </a>
                 <a 
-                  href="#" 
+                  href="https://youtube.com/@fupaabidjan" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
                   className="bg-primary-foreground/10 p-2 rounded-lg hover:bg-secondary hover:text-secondary-foreground transition-colors duration-200"
+                  aria-label="YouTube FUPA"
                 >
                   <Youtube className="h-5 w-5" />
                 </a>

@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -6,6 +7,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { useFormSubmission } from '@/hooks/useFormSubmission';
 import { 
   MapPin, 
   Phone, 
@@ -109,6 +111,33 @@ const Contact = () => {
     }
   ];
 
+  const { submitContactForm, isLoading } = useFormSubmission();
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    subject: '',
+    department: '',
+    message: ''
+  });
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const result = await submitContactForm(formData);
+    if (result.success) {
+      setFormData({
+        name: '',
+        email: '',
+        subject: '',
+        department: '',
+        message: ''
+      });
+    }
+  };
+
+  const handleInputChange = (field: string, value: string) => {
+    setFormData(prev => ({ ...prev, [field]: value }));
+  };
+
   return (
     <div className="min-h-screen bg-background">
       <Header />
@@ -176,75 +205,81 @@ const Contact = () => {
             <CardHeader>
               <CardTitle className="text-center text-primary">Formulaire de Contact</CardTitle>
             </CardHeader>
-            <CardContent className="space-y-6">
-              <div className="grid md:grid-cols-2 gap-4">
+            <CardContent>
+              <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
-                  <Label htmlFor="contactFirstName">Prénom *</Label>
-                  <Input id="contactFirstName" placeholder="Votre prénom" />
+                  <Label htmlFor="contactName">Nom complet *</Label>
+                  <Input 
+                    id="contactName" 
+                    placeholder="Votre nom complet"
+                    value={formData.name}
+                    onChange={(e) => handleInputChange('name', e.target.value)}
+                    required
+                  />
                 </div>
-                <div>
-                  <Label htmlFor="contactLastName">Nom *</Label>
-                  <Input id="contactLastName" placeholder="Votre nom" />
-                </div>
-              </div>
 
-              <div className="grid md:grid-cols-2 gap-4">
                 <div>
                   <Label htmlFor="contactEmail">Email *</Label>
-                  <Input id="contactEmail" type="email" placeholder="votre.email@exemple.com" />
+                  <Input 
+                    id="contactEmail" 
+                    type="email" 
+                    placeholder="votre.email@exemple.com"
+                    value={formData.email}
+                    onChange={(e) => handleInputChange('email', e.target.value)}
+                    required
+                  />
                 </div>
-                <div>
-                  <Label htmlFor="contactPhone">Téléphone</Label>
-                  <Input id="contactPhone" placeholder="+225 XX XX XX XX XX" />
-                </div>
-              </div>
 
-              <div className="grid md:grid-cols-2 gap-4">
-                <div>
-                  <Label htmlFor="contactSubject">Sujet de votre demande *</Label>
-                  <Select>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Choisir un sujet" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="admission">Demande d'admission</SelectItem>
-                      <SelectItem value="info-programmes">Informations sur les programmes</SelectItem>
-                      <SelectItem value="frais">Questions sur les frais</SelectItem>
-                      <SelectItem value="vie-etudiante">Vie étudiante</SelectItem>
-                      <SelectItem value="partenariats">Partenariats</SelectItem>
-                      <SelectItem value="autre">Autre demande</SelectItem>
-                    </SelectContent>
-                  </Select>
+                <div className="grid md:grid-cols-2 gap-4">
+                  <div>
+                    <Label htmlFor="contactSubject">Sujet de votre demande *</Label>
+                    <Select value={formData.subject} onValueChange={(value) => handleInputChange('subject', value)}>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Choisir un sujet" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="admission">Demande d'admission</SelectItem>
+                        <SelectItem value="info-programmes">Informations sur les programmes</SelectItem>
+                        <SelectItem value="frais">Questions sur les frais</SelectItem>
+                        <SelectItem value="vie-etudiante">Vie étudiante</SelectItem>
+                        <SelectItem value="partenariats">Partenariats</SelectItem>
+                        <SelectItem value="autre">Autre demande</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div>
+                    <Label htmlFor="contactDepartment">Service destinataire</Label>
+                    <Select value={formData.department} onValueChange={(value) => handleInputChange('department', value)}>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Choisir un service" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="admission">Service Admissions</SelectItem>
+                        <SelectItem value="direction">Direction</SelectItem>
+                        <SelectItem value="vie-etudiante">Vie Étudiante</SelectItem>
+                        <SelectItem value="scolarite">Scolarité</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
                 </div>
+
                 <div>
-                  <Label htmlFor="contactDepartment">Service destinataire</Label>
-                  <Select>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Choisir un service" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="admission">Service Admissions</SelectItem>
-                      <SelectItem value="direction">Direction</SelectItem>
-                      <SelectItem value="vie-etudiante">Vie Étudiante</SelectItem>
-                      <SelectItem value="scolarite">Scolarité</SelectItem>
-                    </SelectContent>
-                  </Select>
+                  <Label htmlFor="contactMessage">Votre message *</Label>
+                  <Textarea 
+                    id="contactMessage" 
+                    placeholder="Décrivez votre demande en détail..."
+                    className="h-32"
+                    value={formData.message}
+                    onChange={(e) => handleInputChange('message', e.target.value)}
+                    required
+                  />
                 </div>
-              </div>
 
-              <div>
-                <Label htmlFor="contactMessage">Votre message *</Label>
-                <Textarea 
-                  id="contactMessage" 
-                  placeholder="Décrivez votre demande en détail..."
-                  className="h-32"
-                />
-              </div>
-
-              <Button className="w-full btn-academic">
-                <Send className="h-4 w-4 mr-2" />
-                Envoyer le message
-              </Button>
+                <Button type="submit" className="w-full btn-academic" disabled={isLoading}>
+                  <Send className="h-4 w-4 mr-2" />
+                  {isLoading ? 'Envoi en cours...' : 'Envoyer le message'}
+                </Button>
+              </form>
             </CardContent>
           </Card>
         </div>
