@@ -165,6 +165,10 @@ export type Database = {
         Args: Record<PropertyKey, never>
         Returns: boolean
       }
+      submit_registration: {
+        Args: { p_email: string; p_name: string; p_phone: string }
+        Returns: string
+      }
     }
     Enums: {
       app_role: "admin" | "moderator" | "user"
