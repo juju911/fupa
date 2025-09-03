@@ -42,7 +42,7 @@ FORMATION CONTINUE:
 - Formations sur mesure pour entreprises
 
 PROCÉDURE D'INSCRIPTION COMPLÈTE:
-1. Remplir le formulaire d'inscription en ligne: https://www.fupa-edu.com/inscription
+1. Remplir le formulaire d'inscription en ligne: https://ecole.konetchjima.com/registration
 2. Documents requis:
    - Bulletins de notes (BAC et/ou relevés universitaires)
    - Diplômes (BAC, Licence selon le niveau)
@@ -95,7 +95,7 @@ CONTACT:
 - Téléphone: +225 27 22 52 35 27
 - Email: contact@fupa-edu.com
 - Site web: www.fupa-edu.com
-- Formulaire d'inscription: https://www.fupa-edu.com/inscription
+- Formulaire d'inscription: https://ecole.konetchjima.com/registration
 `;
 
 serve(async (req) => {
@@ -137,7 +137,7 @@ INSTRUCTIONS CRITIQUES:
 1. Réponds UNIQUEMENT en français avec un style professionnel, clair et accueillant
 2. Base tes réponses sur les informations officielles FUPA ci-dessus
 3. Structure tes réponses de manière claire et concise
-4. OBLIGATION: Pour toute question concernant les inscriptions, la scolarité ou les frais, TOUJOURS inclure le lien direct: https://www.fupa-edu.com/inscription
+4. OBLIGATION: Pour toute question concernant les inscriptions, la scolarité ou les frais, TOUJOURS inclure le lien direct: https://ecole.konetchjima.com/registration
 5. Donne des informations précises sur:
    - Les formations disponibles (Licences, Masters, Formation continue)
    - Les frais de scolarité exacts par formation
@@ -148,15 +148,15 @@ INSTRUCTIONS CRITIQUES:
 7. Encourage le contact direct: contact@fupa-edu.com ou +225 27 22 52 35 27
 
 RÈGLES DE RÉPONSE AUTOMATIQUES:
-- Question sur inscription/frais → Inclure OBLIGATOIREMENT le lien https://www.fupa-edu.com/inscription
+- Question sur inscription/frais → Inclure OBLIGATOIREMENT le lien https://ecole.konetchjima.com/registration
 - Question sur formations → Donner détails complets + frais + conditions
 - Question sur documents → Lister tous les documents requis
 - Question générale → Orienter vers informations spécifiques FUPA
 
 Exemples de réponses OBLIGATOIRES:
 - Formations: "FUPA propose des Licences (Droit, Économie, Gestion) à 350 000 FCFA/an et des Masters (Droit privé, Droit des affaires, Économie appliquée, Gestion des entreprises) à 450 000 FCFA/an..."
-- Inscription: "Pour vous inscrire à FUPA, remplissez notre formulaire en ligne: https://www.fupa-edu.com/inscription. Vous aurez besoin de..."
-- Frais: "Les frais de scolarité pour [formation] sont de [montant exact] FCFA/an. Inscrivez-vous directement: https://www.fupa-edu.com/inscription"`;
+- Inscription: "Pour vous inscrire à FUPA, remplissez notre formulaire en ligne: https://ecole.konetchjima.com/registration. Vous aurez besoin de..."
+- Frais: "Les frais de scolarité pour [formation] sont de [montant exact] FCFA/an. Inscrivez-vous directement: https://ecole.konetchjima.com/registration"`;
 
     // Call OpenAI API with GPT-4o-mini
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
