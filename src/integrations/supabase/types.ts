@@ -255,6 +255,10 @@ export type Database = {
         Args: { p_email: string; p_name: string; p_phone: string }
         Returns: string
       }
+      update_occupied_places: {
+        Args: { p_program_name: string; p_program_type: string }
+        Returns: undefined
+      }
     }
     Enums: {
       app_role: "admin" | "moderator" | "user"

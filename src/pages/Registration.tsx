@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -12,6 +12,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { useToast } from '@/hooks/use-toast';
+import { supabase } from '@/integrations/supabase/client';
 import { 
   User, 
   Mail, 
@@ -23,7 +24,9 @@ import {
   CreditCard,
   FileText,
   CheckCircle,
-  AlertCircle
+  AlertCircle,
+  Download,
+  Users
 } from 'lucide-react';
 
 interface RegistrationFormData {
@@ -62,10 +65,21 @@ interface RegistrationFormData {
   acceptsProcessing: boolean;
 }
 
+interface ProgramCapacity {
+  id: string;
+  program_type: string;
+  program_name: string;
+  total_places: number;
+  occupied_places: number;
+}
+
 const RegistrationForm = () => {
   const { toast } = useToast();
   const [currentStep, setCurrentStep] = useState(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [capacities, setCapacities] = useState<ProgramCapacity[]>([]);
+  const [paymentReference, setPaymentReference] = useState<string>('');
+  const [registrationId, setRegistrationId] = useState<string>('');
   const [formData, setFormData] = useState<RegistrationFormData>({
     firstName: '',
     lastName: '',
@@ -93,17 +107,34 @@ const RegistrationForm = () => {
 
   const programs = {
     licence: [
-      { value: 'droit', label: 'Licence en Droit', price: 500000 },
-      { value: 'economie', label: 'Licence en Économie', price: 500000 },
-      { value: 'gestion', label: 'Licence en Gestion', price: 500000 }
+      { value: 'Droit', label: 'Licence en Droit', price: 500000 },
+      { value: 'Économie', label: 'Licence en Économie', price: 500000 },
+      { value: 'Gestion', label: 'Licence en Gestion', price: 500000 }
     ],
     master: [
-      { value: 'droit-prive', label: 'Master en Droit Privé', price: 750000 },
-      { value: 'droit-affaires', label: 'Master en Droit des Affaires', price: 750000 },
-      { value: 'economie-appliquee', label: 'Master en Économie Appliquée', price: 750000 },
-      { value: 'gestion-entreprises', label: 'Master en Gestion des Entreprises', price: 750000 }
+      { value: 'Droit privé', label: 'Master en Droit Privé', price: 750000 },
+      { value: 'Droit des affaires', label: 'Master en Droit des Affaires', price: 750000 },
+      { value: 'Économie appliquée', label: 'Master en Économie Appliquée', price: 750000 },
+      { value: 'Gestion des entreprises', label: 'Master en Gestion des Entreprises', price: 750000 }
     ]
   };
+
+  // Charger les capacités des programmes
+  useEffect(() => {
+    const fetchCapacities = async () => {
+      const { data, error } = await supabase
+        .from('program_capacity')
+        .select('*');
+      
+      if (error) {
+        console.error('Erreur chargement capacités:', error);
+      } else {
+        setCapacities(data || []);
+      }
+    };
+
+    fetchCapacities();
+  }, []);
 
   const updateFormData = (field: string, value: any) => {
     setFormData(prev => ({ ...prev, [field]: value }));
@@ -118,6 +149,12 @@ const RegistrationForm = () => {
     const currentPrograms = getCurrentPrograms();
     const selectedProgram = currentPrograms.find(p => p.value === formData.program);
     return selectedProgram?.price || 0;
+  };
+
+  const getProgramCapacity = (programType: string, programName: string) => {
+    return capacities.find(c => 
+      c.program_type === programType && c.program_name === programName
+    );
   };
 
   const formatPrice = (price: number) => {
@@ -172,17 +209,50 @@ const RegistrationForm = () => {
 
     setIsSubmitting(true);
     try {
-      // TODO: Intégrer Paystack ici
-      toast({
-        title: "Inscription en cours",
-        description: "Redirection vers la page de paiement...",
-      });
-      
-      // Simulation pour l'instant
-      setTimeout(() => {
-        setCurrentStep(7);
+      // Vérifier la disponibilité des places
+      const capacity = getProgramCapacity(formData.programType, formData.program);
+      if (capacity && capacity.occupied_places >= capacity.total_places) {
+        toast({
+          title: "Places épuisées",
+          description: "Il n'y a plus de places disponibles pour ce programme",
+          variant: "destructive",
+        });
         setIsSubmitting(false);
-      }, 2000);
+        return;
+      }
+
+      const registrationData = {
+        name: `${formData.firstName} ${formData.lastName}`,
+        email: formData.email,
+        phone: formData.phone,
+        programType: formData.programType,
+        programName: formData.program,
+        amount: getSelectedProgramPrice()
+      };
+
+      const { data, error } = await supabase.functions.invoke('paystack-payment', {
+        body: {
+          email: formData.email,
+          amount: getSelectedProgramPrice(),
+          registrationData
+        }
+      });
+
+      if (error) {
+        throw error;
+      }
+
+      if (data.success) {
+        setPaymentReference(data.reference);
+        setRegistrationId(data.registration_id);
+        // Ouvrir Paystack dans un nouvel onglet
+        window.open(data.authorization_url, '_blank');
+        
+        toast({
+          title: "Redirection vers le paiement",
+          description: "Vous allez être redirigé vers Paystack pour effectuer le paiement",
+        });
+      }
     } catch (error) {
       console.error('Erreur inscription:', error);
       toast({
@@ -190,7 +260,67 @@ const RegistrationForm = () => {
         description: "Une erreur est survenue. Veuillez réessayer.",
         variant: "destructive",
       });
+    } finally {
       setIsSubmitting(false);
+    }
+  };
+
+  const downloadReceipt = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('receipts')
+        .select('*')
+        .eq('registration_id', registrationId)
+        .single();
+
+      if (error || !data) {
+        toast({
+          title: "Erreur",
+          description: "Impossible de télécharger le reçu",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      // Créer un PDF simple avec les informations du reçu
+      const receiptContent = `
+FACULTÉS UNIVERSITAIRES PRIVÉES D'ABIDJAN (FUPA)
+Reçu de paiement
+
+Numéro de reçu: ${data.receipt_number}
+Date: ${new Date(data.payment_date).toLocaleDateString('fr-FR')}
+Étudiant: ${formData.firstName} ${formData.lastName}
+Formation: ${getCurrentPrograms().find(p => p.value === formData.program)?.label}
+Montant: ${formatPrice(data.amount)}
+
+Ce reçu atteste du paiement des frais d'inscription pour l'année académique ${formData.sessionYear}.
+
+FUPA - 2 Plateaux Aghien, Carrefour Opéra – Abidjan
+Tél: +225 27 22 52 35 27
+Email: contact@fupa-edu.com
+      `;
+
+      const blob = new Blob([receiptContent], { type: 'text/plain' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `recu_fupa_${data.receipt_number}.txt`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+
+      toast({
+        title: "Téléchargement réussi",
+        description: "Votre reçu a été téléchargé",
+      });
+    } catch (error) {
+      console.error('Erreur téléchargement reçu:', error);
+      toast({
+        title: "Erreur",
+        description: "Impossible de télécharger le reçu",
+        variant: "destructive",
+      });
     }
   };
 
@@ -387,16 +517,32 @@ const RegistrationForm = () => {
                     <SelectValue placeholder="Choisissez votre programme" />
                   </SelectTrigger>
                   <SelectContent>
-                    {getCurrentPrograms().map((program) => (
-                      <SelectItem key={program.value} value={program.value}>
-                        <div className="flex justify-between items-center w-full">
-                          <span>{program.label}</span>
-                          <Badge variant="secondary" className="ml-2">
-                            {formatPrice(program.price)}
-                          </Badge>
-                        </div>
-                      </SelectItem>
-                    ))}
+                    {getCurrentPrograms().map((program) => {
+                      const capacity = getProgramCapacity(formData.programType, program.value);
+                      const placesRestantes = capacity ? capacity.total_places - capacity.occupied_places : 0;
+                      const isAvailable = !capacity || placesRestantes > 0;
+                      
+                      return (
+                        <SelectItem key={program.value} value={program.value} disabled={!isAvailable}>
+                          <div className="flex justify-between items-center w-full">
+                            <span className={!isAvailable ? 'text-muted-foreground' : ''}>
+                              {program.label}
+                            </span>
+                            <div className="flex items-center gap-2 ml-2">
+                              <Badge variant="secondary">
+                                {formatPrice(program.price)}
+                              </Badge>
+                              {capacity && (
+                                <Badge variant={isAvailable ? "default" : "destructive"}>
+                                  <Users className="h-3 w-3 mr-1" />
+                                  {placesRestantes} places
+                                </Badge>
+                              )}
+                            </div>
+                          </div>
+                        </SelectItem>
+                      );
+                    })}
                   </SelectContent>
                 </Select>
               </div>
@@ -422,6 +568,15 @@ const RegistrationForm = () => {
                     <div>
                       <h4 className="font-semibold">Frais d'inscription</h4>
                       <p className="text-sm text-muted-foreground">Pour l'année {formData.sessionYear}</p>
+                      {(() => {
+                        const capacity = getProgramCapacity(formData.programType, formData.program);
+                        const placesRestantes = capacity ? capacity.total_places - capacity.occupied_places : 0;
+                        return capacity && (
+                          <p className="text-sm text-muted-foreground">
+                            Places disponibles: {placesRestantes} / {capacity.total_places}
+                          </p>
+                        );
+                      })()}
                     </div>
                     <div className="text-right">
                       <div className="text-2xl font-bold text-primary">
@@ -657,8 +812,8 @@ const RegistrationForm = () => {
               <CardContent className="pt-6">
                 <div className="text-left space-y-2">
                   <div className="flex justify-between">
-                    <span>Numéro d'inscription :</span>
-                    <span className="font-semibold">FUPA-2025-001</span>
+                    <span>Référence de paiement :</span>
+                    <span className="font-semibold">{paymentReference}</span>
                   </div>
                   <div className="flex justify-between">
                     <span>Formation :</span>
@@ -672,6 +827,16 @@ const RegistrationForm = () => {
               </CardContent>
             </Card>
 
+            <div className="flex gap-4 justify-center">
+              <Button onClick={downloadReceipt} variant="outline">
+                <Download className="h-4 w-4 mr-2" />
+                Télécharger le reçu
+              </Button>
+              <Button onClick={() => window.location.href = '/'} className="btn-academic">
+                Retour à l'accueil
+              </Button>
+            </div>
+
             <div className="bg-blue-50 p-4 rounded-lg">
               <h4 className="font-semibold mb-2">Prochaines étapes :</h4>
               <ul className="text-left text-sm space-y-1">
@@ -681,10 +846,6 @@ const RegistrationForm = () => {
                 <li>• Suivez nos réseaux sociaux pour les dernières actualités</li>
               </ul>
             </div>
-
-            <Button onClick={() => window.location.href = '/'} className="btn-academic">
-              Retour à l'accueil
-            </Button>
           </div>
         );
 
