@@ -27,18 +27,27 @@ const RegistrationSuccess = () => {
 
   const verifyPayment = async () => {
     try {
-      const { data, error } = await supabase.functions.invoke('paystack-payment', {
-        method: 'GET',
-        body: new URLSearchParams({ reference: reference! })
-      });
+      // Faire un GET direct à l'edge function avec le paramètre reference
+      const response = await fetch(
+        `https://dwxluxysruvbzxiqiynu.supabase.co/functions/v1/paystack-payment?reference=${reference}`,
+        {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR3eGx1eHlzcnV2Ynp4aXFpeW51Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTYzMTI1MjUsImV4cCI6MjA3MTg4ODUyNX0.eeqYCYBdrm2r3qWCkV92FZJhOfqk6A8SpCk5Tz3QsHg`,
+            'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR3eGx1eHlzcnV2Ynp4aXFpeW51Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTYzMTI1MjUsImV4cCI6MjA3MTg4ODUyNX0.eeqYCYBdrm2r3qWCkV92FZJhOfqk6A8SpCk5Tz3QsHg',
+          }
+        }
+      );
 
-      if (error) throw error;
+      const data = await response.json();
 
-      if (data.success) {
-        setPaymentData(data.data);
-        // Récupérer les informations du reçu
-        await fetchReceiptData();
+      if (!response.ok || !data.success) {
+        throw new Error(data.error || 'Erreur de vérification');
       }
+
+      setPaymentData(data.data);
+      // Récupérer les informations du reçu
+      await fetchReceiptData();
     } catch (error) {
       console.error('Erreur vérification paiement:', error);
       toast({
