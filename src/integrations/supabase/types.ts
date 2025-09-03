@@ -38,6 +38,33 @@ export type Database = {
         }
         Relationships: []
       }
+      contact_rate_limit: {
+        Row: {
+          email: string
+          first_submission: string | null
+          id: string
+          ip_address: string
+          last_submission: string | null
+          submission_count: number | null
+        }
+        Insert: {
+          email: string
+          first_submission?: string | null
+          id?: string
+          ip_address: string
+          last_submission?: string | null
+          submission_count?: number | null
+        }
+        Update: {
+          email?: string
+          first_submission?: string | null
+          id?: string
+          ip_address?: string
+          last_submission?: string | null
+          submission_count?: number | null
+        }
+        Relationships: []
+      }
       contact_submissions: {
         Row: {
           created_at: string
