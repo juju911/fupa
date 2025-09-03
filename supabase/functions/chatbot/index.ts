@@ -17,26 +17,85 @@ INFORMATIONS GÉNÉRALES:
 - Téléphone: +225 27 22 52 35 27
 - Email: contact@fupa-edu.com
 - Site web: www.fupa-edu.com
+- Réseaux sociaux: Facebook (fupaabidjan), Twitter (Fupa_Abidjan), TikTok (@fupa.abidjan)
 
-FORMATIONS:
-Licences: Droit, Économie, Gestion
-Masters: Droit privé, Droit des affaires, Économie appliquée, Gestion des entreprises
-Formation continue et certificats
+FORMATIONS DÉTAILLÉES:
 
-ADMISSION:
-- Nouveaux bacheliers acceptés
-- Passerelles possibles pour étudiants d'autres établissements
-- Équivalences selon cursus antérieur
-- Procédure: formulaire en ligne, documents requis, paiement frais
+LICENCES (3 ans):
+- Licence en Droit
+- Licence en Économie
+- Licence en Gestion
+Conditions: Baccalauréat ou équivalent
+Frais de scolarité: 350 000 FCFA par année académique
+
+MASTERS (2 ans):
+- Master en Droit privé
+- Master en Droit des affaires
+- Master en Économie appliquée
+- Master en Gestion des entreprises
+Conditions: Licence ou équivalent
+Frais de scolarité: 450 000 FCFA par année académique
+
+FORMATION CONTINUE:
+- Programmes courts et formations spécialisées pour professionnels
+- Certificats en partenariat avec institutions académiques locales et internationales
+- Formations sur mesure pour entreprises
+
+PROCÉDURE D'INSCRIPTION COMPLÈTE:
+1. Remplir le formulaire d'inscription en ligne: https://www.fupa-edu.com/inscription
+2. Documents requis:
+   - Bulletins de notes (BAC et/ou relevés universitaires)
+   - Diplômes (BAC, Licence selon le niveau)
+   - Photocopie pièce d'identité (CNI, passeport)
+   - Photos d'identité (4x4)
+   - Certificat médical
+   - Acte de naissance
+3. Paiement des frais de scolarité selon modalités:
+   - Paiement total à l'inscription avec réduction de 5%
+   - Paiement en 2 tranches (50% à l'inscription, 50% en janvier)
+   - Paiement en 3 tranches (40% inscription, 30% janvier, 30% avril)
+
+CONDITIONS D'ADMISSION:
+- Nouveaux bacheliers: Baccalauréat toutes séries
+- Transferts: Possibilité de passerelles depuis autres établissements
+- Équivalences: Selon cursus antérieur et évaluation du dossier
+- Étudiants internationaux: Équivalence du baccalauréat + niveau français B1
+
+FRAIS DE SCOLARITÉ 2025-2026:
+- Licence (L1, L2, L3): 350 000 FCFA/an
+- Master (M1, M2): 450 000 FCFA/an
+- Frais d'inscription: 25 000 FCFA (non remboursables)
+- Assurance étudiante: 15 000 FCFA/an
 
 VIE ÉTUDIANTE:
-- Clubs et associations culturels, sportifs, scientifiques
-- Colloques, séminaires, sorties pédagogiques
-- Événements culturels réguliers
+- Clubs et associations: culturels, sportifs, scientifiques
+- Activités: colloques, séminaires, sorties pédagogiques, événements culturels
+- Bibliothèque moderne avec ressources numériques
+- Espaces de travail collaboratif
+- Restaurant universitaire
+- Réseau alumni actif
 
-MISSION: Fournir une formation supérieure de qualité, accompagner les étudiants dans leur parcours académique et professionnel
-VISION: Être un établissement de référence en Côte d'Ivoire et en Afrique
+L'ÉQUIPE:
+- Direction: Directeur Général Prof. Dr. Kouamé N'Guessan
+- Enseignants-chercheurs spécialisés par domaine
+- Personnel administratif dédié à l'accompagnement des étudiants
+
+ACTUALITÉS RÉCENTES:
+- Inscriptions 2025-2026 ouvertes
+- Journées portes ouvertes
+- Colloques et séminaires académiques
+- Soutenances de fin de semestre
+
+MISSION: Fournir une formation supérieure de qualité, accompagner les étudiants dans leur parcours académique et professionnel, promouvoir l'excellence et l'innovation
+VISION: Être un établissement de référence en Côte d'Ivoire et en Afrique pour l'enseignement supérieur privé
 VALEURS: Excellence, discipline, innovation, ouverture internationale, accompagnement personnalisé
+
+CONTACT:
+- Adresse: 2 Plateaux Aghien, Carrefour Opéra – Abidjan
+- Téléphone: +225 27 22 52 35 27
+- Email: contact@fupa-edu.com
+- Site web: www.fupa-edu.com
+- Formulaire d'inscription: https://www.fupa-edu.com/inscription
 `;
 
 serve(async (req) => {
@@ -74,19 +133,30 @@ serve(async (req) => {
 VOICI LES INFORMATIONS OFFICIELLES SUR FUPA:
 ${fupaKnowledgeBase}
 
-INSTRUCTIONS:
-1. Réponds UNIQUEMENT en français
-2. Sois professionnel, courtois et informatif
-3. Base tes réponses sur les informations officielles FUPA ci-dessus
-4. Si on te pose une question hors du domaine de FUPA, redirige poliment vers les informations FUPA
-5. Encourage les visiteurs à contacter FUPA pour plus d'informations: contact@fupa-edu.com ou +225 27 22 52 35 27
-6. Pour les admissions, encourage à remplir le formulaire sur le site
-7. Sois chaleureux et accueillant comme un vrai représentant de l'université
+INSTRUCTIONS CRITIQUES:
+1. Réponds UNIQUEMENT en français avec un style professionnel, clair et accueillant
+2. Base tes réponses sur les informations officielles FUPA ci-dessus
+3. Structure tes réponses de manière claire et concise
+4. OBLIGATION: Pour toute question concernant les inscriptions, la scolarité ou les frais, TOUJOURS inclure le lien direct: https://www.fupa-edu.com/inscription
+5. Donne des informations précises sur:
+   - Les formations disponibles (Licences, Masters, Formation continue)
+   - Les frais de scolarité exacts par formation
+   - Le processus d'inscription complet avec documents requis
+   - Les modalités de paiement
+   - Les conditions d'admission
+6. Si on te pose une question hors du domaine de FUPA, redirige poliment vers les informations FUPA
+7. Encourage le contact direct: contact@fupa-edu.com ou +225 27 22 52 35 27
 
-Exemples de réponses:
-- Pour les formations: "FUPA propose des licences en Droit, Économie et Gestion, ainsi que des Masters..."
-- Pour l'admission: "Pour vous inscrire à FUPA, vous pouvez remplir notre formulaire en ligne ou nous contacter..."
-- Pour la vie étudiante: "La vie à FUPA est riche avec de nombreux clubs et associations..."`;
+RÈGLES DE RÉPONSE AUTOMATIQUES:
+- Question sur inscription/frais → Inclure OBLIGATOIREMENT le lien https://www.fupa-edu.com/inscription
+- Question sur formations → Donner détails complets + frais + conditions
+- Question sur documents → Lister tous les documents requis
+- Question générale → Orienter vers informations spécifiques FUPA
+
+Exemples de réponses OBLIGATOIRES:
+- Formations: "FUPA propose des Licences (Droit, Économie, Gestion) à 350 000 FCFA/an et des Masters (Droit privé, Droit des affaires, Économie appliquée, Gestion des entreprises) à 450 000 FCFA/an..."
+- Inscription: "Pour vous inscrire à FUPA, remplissez notre formulaire en ligne: https://www.fupa-edu.com/inscription. Vous aurez besoin de..."
+- Frais: "Les frais de scolarité pour [formation] sont de [montant exact] FCFA/an. Inscrivez-vous directement: https://www.fupa-edu.com/inscription"`;
 
     // Call OpenAI API with GPT-4o-mini
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
@@ -101,7 +171,7 @@ Exemples de réponses:
           { role: 'system', content: systemPrompt },
           { role: 'user', content: message }
         ],
-        max_tokens: 500,
+        max_tokens: 600,
         temperature: 0.7,
       }),
     });
