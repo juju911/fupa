@@ -50,7 +50,7 @@ const HeroSection = () => {
                 S'inscrire maintenant
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
-              <Button size="lg" variant="outline" className="border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary text-lg px-8">
+              <Button size="lg" variant="outline" className="border-secondary text-secondary hover:bg-secondary hover:text-primary text-lg px-8 shadow-glow">
                 <Download className="mr-2 h-5 w-5" />
                 Télécharger la brochure
               </Button>

@@ -58,7 +58,10 @@ const NewsSection = () => {
                 </p>
               </div>
             </div>
-            <Button className="btn-gold hidden md:inline-flex">
+            <Button 
+              className="btn-gold hidden md:inline-flex"
+              onClick={() => window.location.href = '/registration'}
+            >
               Je m'inscris
               <ArrowRight className="ml-2 h-4 w-4" />
             </Button>

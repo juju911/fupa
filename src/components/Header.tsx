@@ -47,7 +47,11 @@ const Header = () => {
 
           {/* CTA Button */}
           <div className="hidden md:flex items-center space-x-3">
-            <Button size="sm" className="btn-academic animate-pulse hover:animate-none hover:scale-110 transition-all duration-300">
+            <Button 
+              size="sm" 
+              className="btn-academic animate-pulse hover:animate-none hover:scale-110 transition-all duration-300"
+              onClick={() => window.location.href = '/registration'}
+            >
               S'inscrire
             </Button>
           </div>
@@ -77,7 +81,11 @@ const Header = () => {
                 </a>
               ))}
               <div className="flex flex-col space-y-2 pt-4 border-t border-border">
-                <Button size="sm" className="btn-academic">
+                <Button 
+                  size="sm" 
+                  className="btn-academic"
+                  onClick={() => window.location.href = '/registration'}
+                >
                   S'inscrire
                 </Button>
               </div>
