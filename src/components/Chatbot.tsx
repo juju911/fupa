@@ -155,7 +155,14 @@ const Chatbot = () => {
                         : 'bg-primary text-white'
                     }`}
                   >
-                    {message.content}
+                    <div dangerouslySetInnerHTML={{ 
+                      __html: message.isBot 
+                        ? message.content.replace(
+                            /(https?:\/\/[^\s]+)/g, 
+                            '<a href="$1" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:text-blue-800 underline font-medium">$1</a>'
+                          )
+                        : message.content
+                    }} />
                     <div className={`text-xs mt-1 opacity-70 ${
                       message.isBot ? 'text-muted-foreground' : 'text-white/70'
                     }`}>
